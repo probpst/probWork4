@@ -1,0 +1,35 @@
+$Case_title
+  Case_name = "cylrest"
+/end
+$Control
+  Units = 1
+  End_T = 30.0
+  CFL = 0.4
+/end
+$Grid
+  Grid_file = "../tearing/cyl_28x32x8.xyz"
+  Grid_format = 2
+  Periodic = 0, 1, 1
+  Periodic_dup = 0, 0, 1
+  BC_imin = 1
+  BC_imax = 1
+/end
+$Initial_Condition
+  IC_type = 6
+  rho_init = 1.0
+  p_init = 0.1
+  B_init = 0.0, 0.0, 1.0
+  Perturb_amp = 1.0e-4
+  Perturb_m = 0
+/end
+$Numerical_Scheme
+  Cnvt_scheme = 4
+  Riemann_solver = 3
+  Time_scheme = 3
+  CT_scheme = 1
+/end
+$Export_Interval
+  Output_Intvl = 0
+  Log_Intvl = 1000
+  Monitor_Intvl = 20
+/end

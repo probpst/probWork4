@@ -200,19 +200,26 @@ contains
     end if
   end subroutine update_faces
 
-  ! normalised divergence: |sum_f Phi_f| / (|B| V / h) per cell, maximum over the domain
+  ! normalised divergence: |sum_f Phi_f| / (B_ref V / h) per cell, maximum over the domain,
+  ! with B_ref the larger of the local |B| and 1 % of the domain maximum (a cell where the
+  ! field vanishes must not read as a divergence error)
   subroutine divergence_B(bb, wp, dmax)
     real(dp), intent(in)  :: bb(3, 1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk)
     real(dp), intent(in)  :: wp(NVAR, 1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk)
     real(dp), intent(out) :: dmax
     integer :: i, j, k
-    real(dp) :: d, bmag, h
+    real(dp) :: d, bmag, h, bfloor
+    bfloor = 0.0_dp
+    do k = 1, nz; do j = 1, ny; do i = 1, nx
+       bfloor = max(bfloor, norm2(wp(6:8,i,j,k)))
+    end do; end do; end do
+    bfloor = 0.01_dp*max(gmax(bfloor), 1.0e-30_dp)
     dmax = 0.0_dp
     do k = 1, nz
        do j = 1, ny
           do i = 1, nx
              d = bb(1,i+1,j,k) - bb(1,i,j,k) + bb(2,i,j+1,k) - bb(2,i,j,k) + bb(3,i,j,k+1) - bb(3,i,j,k)
-             bmag = max(norm2(wp(6:8,i,j,k)), 1.0e-30_dp)
+             bmag = max(norm2(wp(6:8,i,j,k)), bfloor)
              h = vol(i,j,k)**(1.0_dp/3.0_dp)
              divb(i,j,k) = d/vol(i,j,k)*h/bmag
              dmax = max(dmax, abs(divb(i,j,k)))

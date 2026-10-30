@@ -1,10 +1,10 @@
 $Case_title
-  Case_name            = "tearing_S1000"
+  Case_name            = "dbg"
 /end
 $Control
   Units                = 1
   Del_T                = 0.0
-  End_T                = 300.0
+  End_T                = 30.0
   CFL                  = 0.5
   Gamma                = 1.6666666666666667
 /end
@@ -29,15 +29,15 @@ $Numerical_Scheme
   Riemann_solver       = 3
   Time_scheme          = 2
   CT_scheme            = 1
-  SW_Eq_Subtract       = 1
+  SW_Eq_Subtract       = 0
 /end
 $Physics
-  eta                  = 0.001
+  eta                  = 0.0
   nu                   = 0.0
 /end
 $Export_Interval
   Output_Intvl         = 0
-  Log_Intvl            = 2000
+  Log_Intvl            = 1000
   Monitor_Intvl        = 20
   Output_slice         = 1
 /end
