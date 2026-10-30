@@ -16,9 +16,9 @@ $Control
 
 $Grid
   Grid_format          = 3              ! generated box
-  Ncell                = 8000, 1, 1
+  Ncell                = 3200, 1, 1
   Box_min              = 0.0, 0.0, 0.0
-  Box_max              = 1.0, 0.000125, 0.000125
+  Box_max              = 1.0, 0.0003125, 0.0003125
   Periodic             = 0, 1, 1
   BC_imin              = 2              ! zero gradient
   BC_imax              = 2

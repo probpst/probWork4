@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Brio-Wu shock tube: probMHD (800 cells, ENO2 / ENO3 / 1st-order upwind) against the
-8000-cell reference run of the same code at t = 0.1."""
+3200-cell reference run of the same code at t = 0.1."""
 import sys, os, glob
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
@@ -15,7 +15,7 @@ def last_slice(d):
     x = (np.arange(n) + 0.5)/n
     return x, s
 
-runs = [('ref', '8000 cells, ENO2 (reference)', 'k-'), ('.', '800 cells, ENO2 (Cnvt_scheme 4)', 'r.'),
+runs = [('ref', '3200 cells, ENO2 (reference)', 'k-'), ('.', '800 cells, ENO2 (Cnvt_scheme 4)', 'r.'),
         ('eno3', '800 cells, ENO3 (Cnvt_scheme 5)', 'b.'), ('upw1', '800 cells, 1st-order upwind', 'g.')]
 fig, ax = plt.subplots(2, 3, figsize=(14, 8))
 ax = ax.ravel()
@@ -43,5 +43,5 @@ fig.tight_layout()
 fig.savefig('briowu_result.png', dpi=130)
 with open('briowu_errors.txt', 'w') as f:
     for k, v in errs.items():
-        f.write(f'L1(rho) vs 8000-cell reference  {k:40s} {v:.4e}\n')
+        f.write(f'L1(rho) vs 3200-cell reference  {k:40s} {v:.4e}\n')
 print(open('briowu_errors.txt').read())
