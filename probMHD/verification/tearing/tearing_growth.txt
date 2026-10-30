@@ -1,0 +1,2 @@
+ideal_28       gamma t_A = 0.2945   (fit window t = 4.5 .. 15.3)
+ideal_56       gamma t_A = 0.6530   (fit window t = 2.6 .. 6.0)

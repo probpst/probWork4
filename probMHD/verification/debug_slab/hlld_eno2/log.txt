@@ -1,0 +1,68 @@
+ ===============================================================================
+ ||                                                                           ||
+ ||     pppp   r  r   ooo     b       M   M  H   H  DDDD                      ||
+ ||     p   p  r r   o   o    b       MM MM  H   H  D   D     probMHD         ||
+ ||     p  p   rr   o     o   b       M M M  HHHHH  D    D    full MHD        ||
+ ||     ppp    r    o     o   bbbb    M   M  H   H  D    D    curvilinear     ||
+ ||     p      r    o     o   b   b   M   M  H   H  D   D     ENO / HLLD / CT ||
+ ||     p      r      ooo     bbbb    M   M  H   H  DDDD      MPI             ||
+ ||                                                                           ||
+ ===============================================================================
+ 
+ probMHD - tokamak full-MHD solver (probCFD_부산 family)
+ 
+  grid metrics     : min cell volume*   3.6169E-05  total volume*   8.3333E-02
+ ---------------- input summary (probMHD.nml) ----------------
+  Case_name        : slab
+  Mode             : 0 (standard)
+  Units            : 1 (code units; Char_* = 1)
+  Char_L   [m]     :   1.0000E+00
+  Char_B   [T]     :   1.0000E+00
+  Char_Rho [kg/m3] :   1.0000E+00
+  v_A0     [m/s]   :   1.0000E+00
+  t_A0     [s]     :   1.0000E+00
+  p0       [Pa]    :   1.0000E+00
+  End_T    [s]     :   4.0000E+01
+  Del_T            : automatic, CFL  0.400, VN  0.400
+  gamma            :   1.6667
+  cells            :     48    48     1  total 2304
+  MPI decomposition:      1     1     1
+  periodic (i,j,k) :  0 1 1
+  BC (imin,imax,jmin,jmax,kmin,kmax):   1  1  2  2  2  2
+  Cnvt_scheme      : 4 (2nd-order ENO, minmod - probCFD)
+  Riemann_solver   : 3 (HLLD)
+  Time_scheme      : 3 (SSP RK3)
+  CT_scheme        : 1 (constrained transport, face fluxes)
+  SW_Eq_Subtract   : 1
+  SW_Energy        : 1 (total energy, conservative)
+  resistivity      : 0 (ideal MHD)
+  viscosity nu*    :   0.0000E+00
+  chi_par*, chi_perp*:   0.0000E+00  0.0000E+00
+  D_perp*          :   0.0000E+00
+  heating P*       :   0.0000E+00  (width  5.000E-01 a)
+  SW_radiation     : 0
+  SW_Turb_MHD      : 0 (none: ENO dissipation only / implicit LES)
+  IC_type          : 7
+  Output_Intvl     : 0  Log_Intvl 1000  Restart_Intvl 0
+ -------------------------------------------------------------
+  boundary B_n/|B| (dir 1, side 1):  0.000E+00
+  boundary B_n/|B| (dir 1, side 2):  0.000E+00
+  equilibrium subtraction: max |rhs_eq| (momentum)  5.628E-01  max |emf_eq|  3.439E-04
+ ---------------- initial state ----------------
+  E_kin, E_mag, E_th, E_tot* :   4.127953E-10  5.208337E-02  1.250001E-02  6.458339E-02
+  max |v|*  :   1.6823E-04   max |div B| (normalised):   0.0000E+00
+  first dt   :   4.6348E-03 s  (  4.6348E-03 t_A)
+ -----------------------------------------------
+    step       t [s]        dt [s]     CFL     E_kin*        E_mag*        E_th*       dE_tot/E0    max|v|*    max|divB|   min rho*    wall [s]
+    1000   4.6350E+00   4.6351E-03  0.4000  1.125115E-11  5.208338E-02  1.250000E-02    3.653E-14   5.520E-05   6.561E-15   9.997E-01     465.8
+    2000   9.2702E+00   4.6351E-03  0.4000  1.395257E-11  5.208339E-02  1.249999E-02    3.395E-14   8.532E-05   1.046E-14   9.996E-01     823.6
+    3000   1.3905E+01   4.6352E-03  0.4000  1.676534E-11  5.208340E-02  1.249999E-02    3.417E-14   8.223E-05   1.330E-14   9.997E-01    1151.3
+    4000   1.8540E+01   4.6351E-03  0.4000  1.610336E-11  5.208341E-02  1.249998E-02    3.202E-14   9.003E-05   1.188E-14   9.997E-01    1262.2
+    5000   2.3176E+01   4.6351E-03  0.4000  3.075730E-11  5.208341E-02  1.249997E-02    3.524E-14   1.255E-04   1.827E-14   9.996E-01    1312.9
+    6000   2.7811E+01   4.6351E-03  0.4000  3.602598E-11  5.208343E-02  1.249996E-02    3.374E-14   1.554E-04   1.561E-14   9.994E-01    1361.9
+    7000   3.2446E+01   4.6351E-03  0.4000  6.170326E-11  5.208345E-02  1.249994E-02    3.632E-14   2.191E-04   1.605E-14   9.994E-01    1411.0
+    8000   3.7081E+01   4.6351E-03  0.4000  1.119273E-10  5.208348E-02  1.249991E-02    3.266E-14   2.914E-04   2.030E-14   9.991E-01    1453.5
+    8630   4.0000E+01   3.4924E-03  0.4000  1.576000E-10  5.208349E-02  1.249989E-02    3.309E-14   3.235E-04   2.199E-14   9.990E-01    1471.3
+ -----------------------------------------------
+  normal end after 8630 steps, t =   4.0000E+01 s, wall time     1471.3 s
+  dE_tot/E0 =   3.3092E-14   max |div B| =   2.1989E-14

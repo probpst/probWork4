@@ -15,7 +15,7 @@ $Control
   Char_Rho             = 1.672e-7       ! [kg/m3]  n = 5e19 m-3 deuterium
   Ion_mass_amu         = 2.014
   Del_T                = 0.0            ! automatic
-  End_T                = 2.6e-6         ! 20 Alfven times
+  End_T                = 1.95e-6        ! 15 Alfven times
   CFL                  = 0.4
   Gamma                = 1.6666666666666667
 /end

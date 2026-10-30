@@ -2,7 +2,7 @@
 
 Three runs of the same perturbed equilibrium (33 x 60 flux-aligned cells, 0.5 deg wedge,
 m = 3 / n = 0 velocity perturbation of 1e-3 v_A, resistive S = 1e5, well-balanced, internal-energy
-equation) that differ only in `$Turbulence`:
+equation, 15 Alfven times) that differ only in `$Turbulence`:
 
 | folder | `SW_Turb_MHD` | model |
 |---|---|---|

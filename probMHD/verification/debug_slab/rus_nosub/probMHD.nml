@@ -1,0 +1,37 @@
+$Case_title
+  Case_name = "slab"
+/end
+$Control
+  Units = 1
+  End_T = 40.0
+  CFL = 0.4
+/end
+$Grid
+  Grid_format = 3
+  Ncell = 48, 48, 1
+  Box_min = 0.0, 0.0, 0.0
+  Box_max = 1.0, 2.0, 0.0416667
+  Periodic = 0, 1, 1
+  BC_imin = 1
+  BC_imax = 1
+/end
+$Initial_Condition
+  IC_type = 7
+  rho_init = 1.0
+  p_init = 0.1
+  IC_param = 1.0, 0.1, 0.5, 0.5
+  Perturb_amp = 1.0e-4
+  Perturb_m = 0
+/end
+$Numerical_Scheme
+  Cnvt_scheme = 4
+  Riemann_solver = 1
+  Time_scheme = 3
+  CT_scheme = 1
+  SW_Eq_Subtract = 0
+/end
+$Export_Interval
+  Output_Intvl = 0
+  Log_Intvl = 1000
+  Monitor_Intvl = 20
+/end
