@@ -74,6 +74,7 @@ contains
     real(dp), intent(in)    :: tnow
     integer :: i, j, k
     logical :: resist
+    real(dp) :: g1, g2
     if (.not. allocated(smax)) allocate(smax(3, 1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk))
     ! primitive state
     do k = 1-ngk, nz+ngk
@@ -144,8 +145,8 @@ contains
           allocate(rhs_eq(NVAR, 1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk), emf_eq(3, 1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk))
           allocate(rhs_e_eq(1-ngi:nx+ngi, 1-ngj:ny+ngj, 1-ngk:nz+ngk))
           rhs_eq = rhs;  emf_eq = emf;  rhs_e_eq = rhs_e;  eq_residual_stored = .true.
-          if (myrank == 0) write(*,'(A,ES10.3,A,ES10.3)') '  equilibrium subtraction: max |rhs_eq| (momentum) ', &
-               gmax(maxval(abs(rhs(2:4,1:nx,1:ny,1:nz)))), '  max |emf_eq| ', gmax(maxval(abs(emf(:,1:nx+1,1:ny+1,1:nz+1))))
+          g1 = gmax(maxval(abs(rhs(2:4,1:nx,1:ny,1:nz))));  g2 = gmax(maxval(abs(emf(:,1:nx+1,1:ny+1,1:nz+1))))   ! collective: every rank
+          if (myrank == 0) write(*,'(A,ES10.3,A,ES10.3)') '  equilibrium subtraction: max |rhs_eq| (momentum) ', g1, '  max |emf_eq| ', g2
        end if
        rhs = rhs - rhs_eq
        emf = emf - emf_eq

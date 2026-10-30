@@ -1,0 +1,4 @@
+grid 256 x 256, t_end = 0.5000
+max |dE_tot/E_0| over the run = 0.000e+00
+max |div B| (normalised) over the run = 3.540e-12
+rho range at t_end: 0.0911 .. 0.4945;  p range: 0.0308 .. 0.5089
