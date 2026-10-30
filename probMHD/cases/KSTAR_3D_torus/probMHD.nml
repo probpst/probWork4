@@ -16,7 +16,7 @@ $Control
   Char_B               = 3.5
   Char_Rho             = 1.672e-7       ! n = 5e19 m-3 deuterium
   Del_T                = 0.0
-  End_T                = 6.5e-7         ! 5 Alfven times (t_A = 1.3e-7 s)
+  End_T                = 3.9e-7         ! 3 Alfven times (t_A = 1.3e-7 s)
   CFL                  = 0.4
 /end
 

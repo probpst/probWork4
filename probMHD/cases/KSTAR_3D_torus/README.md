@@ -15,3 +15,9 @@ the hoop force and a spurious B_n / |B| ~ 3e-3 on the flux-surface boundaries; t
 grid (3.6 deg) has 1.2e-4 / 1e-4.  The equilibrium subtraction removes the residual of the initial
 state in either case.  With the full 3M-point grid the Alfven CFL gives dt ~ 1e-10 s (see the
 main README on the explicit time step).
+
+## Result of the delivered run (2 ranks, stopped at 1.2 t_A)
+
+The 3-D run reproduces the 2-D behaviour: the 1e-3 v_A perturbation stays at 1e-3 for the first ~0.8 t_A (total energy
+conserved to 3e-7, div B 3e-13 in full 3-D with MPI), then the inner-hole ring breaks down (max v jumps, dt collapses
+to 1e-12 s).  `Output_data/KSTAR_3D_monitor.dat` and `KSTAR_3D_monitor.png` hold the history.
