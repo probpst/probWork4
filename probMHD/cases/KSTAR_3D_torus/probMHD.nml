@@ -1,0 +1,79 @@
+!=====================================================================
+! probMHD name list - KSTAR-scale Solov'ev equilibrium, full torus, 3-D
+!   grid: kstar_33x60x20_torus.xyz (the delivered 100 x 300 x 100 grid sub-sampled 3 x 5 x 5:
+!   33 x 60 x 20 cells, 18 deg toroidal planes); m = 3 / n = 1 velocity perturbation on the
+!   q = 3 surface, resistive (S = 1e6 on the L0 = 1 m scale), internal-energy equation,
+!   well-balanced (equilibrium subtraction).  4 MPI ranks: mpirun -np 4 ./probMHD
+!=====================================================================
+$Case_title
+  Mode                 = 0
+  Case_name            = "KSTAR_3D"
+/end
+
+$Control
+  Units                = 0
+  Char_L               = 1.0
+  Char_B               = 3.5
+  Char_Rho             = 1.672e-7       ! n = 5e19 m-3 deuterium
+  Del_T                = 0.0
+  End_T                = 6.5e-7         ! 5 Alfven times (t_A = 1.3e-7 s)
+  CFL                  = 0.4
+/end
+
+$Grid
+  Grid_file            = "../grids/kstar_33x60x20_torus.xyz"
+  Grid_format          = 2
+  Periodic             = 0, 1, 1
+  Periodic_dup         = 0, 0, 0        ! the KSTAR file has no duplicate closing node
+  BC_imin              = 4
+  BC_imax              = 1
+/end
+
+$Initial_Condition
+  IC_type              = 5
+  Perturb_amp          = 1.0e-3         ! v / v_A0
+  Perturb_m            = 3
+  Perturb_n            = 1
+/end
+
+$Tokamak
+  R0                   = 1.80
+  a                    = 0.50
+  kappa                = 1.80
+  delta                = 0.60
+  B0                   = 3.5
+  A_solovev            = -0.155
+  Psi0                 = 8.318766676137974
+  p_floor_ratio        = 0.02
+  n_axis               = 5.0e19
+  n_exponent           = 0.5
+  n_floor_ratio        = 0.1
+/end
+
+$Numerical_Scheme
+  Cnvt_scheme          = 4
+  Riemann_solver       = 3
+  Time_scheme          = 3
+  CT_scheme            = 1
+  SW_Eq_Subtract       = 1
+  SW_Energy            = 2
+/end
+
+$Physics
+  eta                  = 9.55e-6        ! [Ohm m]: S = mu0 L0 v_A0 / eta = 1e6
+  nu                   = 0.0
+  chi_par              = 0.0
+  chi_perp             = 0.0
+/end
+
+$Turbulence
+  SW_Turb_MHD          = 0
+/end
+
+$Export_Interval
+  Output_Intvl         = 0
+  Log_Intvl            = 500
+  Monitor_Intvl        = 20
+  Restart_Intvl        = 0
+  Output_slice         = 1
+/end

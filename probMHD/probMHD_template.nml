@@ -1,0 +1,130 @@
+!=====================================================================
+! probMHD name list - TEMPLATE with every input annotated
+!   (grouped format of probCFD_부산: $Group ... /end, "!" starts a comment,
+!    names are case-insensitive, unknown names abort, every value has a default)
+!=====================================================================
+
+$Case_title
+  Mode                 = 0              ! 0 standard run, 1 restart from the latest <case>_NNNNNNNN.rsto in the folder
+  Case_name            = "Case1"
+/end
+
+$Control
+  Units                = 0              ! 0 SI inputs and outputs (Char_* define the code units), 1 code units (Char_* = 1)
+  Char_L               = 1.0            ! length scale L0 [m]
+  Char_B               = 3.5            ! field scale B0 [T]
+  Char_Rho             = 1.672e-7       ! mass density scale rho0 [kg/m3]   (v_A0 = B0/sqrt(mu0 rho0), t_A0 = L0/v_A0, p0 = B0^2/mu0)
+  Ion_mass_amu         = 2.014          ! ion mass (temperature conversion T [K] = m_i p0/(2 k_B rho0) p*/rho*, Z = 1, T_i = T_e)
+  Del_T                = 0.0            ! time step [s]; 0 = automatic from CFL / VN
+  End_T                = 1.0e-5         ! end time [s]
+  CFL                  = 0.4            ! convective Courant number (fast magnetosonic speed, sum over directions)
+  VN                   = 0.4            ! diffusive von Neumann number
+  Gamma                = 1.6666666666666667
+  Max_steps            = 100000000      ! stop after this many steps
+/end
+
+$Grid
+  Grid_file            = "grid.xyz"
+  Grid_format          = 2              ! 1 PLOT3D ASCII (probCFD grids), 2 PLOT3D Fortran unformatted float64 (the KSTAR file), 3 generated box
+  Grid_multiblock      = 0              ! 1: the file starts with an nblocks record (must be 1)
+  Ncell                = 64, 64, 1      ! Grid_format 3: cells
+  Box_min              = 0.0, 0.0, 0.0  ! Grid_format 3: box corners
+  Box_max              = 1.0, 1.0, 0.01
+  Periodic             = 0, 1, 1        ! periodic directions (i, j, k)
+  Periodic_dup         = 0, 0, 0        ! 1: the periodic closing node is repeated in the file (probCFD grids); 0: no duplicate (KSTAR file)
+  Periodic_rot         = 0, 0, 0        ! rotational periodicity about z [deg] for a toroidal wedge (with Periodic_dup = 1); 0 = translation
+  BC_imin              = 4              ! boundary types: 1 conducting wall (slip, B_n held), 2 zero gradient, 3 fixed (initial state held),
+  BC_imax              = 1              !   4 axis hole / conducting core (as 1)
+  BC_jmin              = 2
+  BC_jmax              = 2
+  BC_kmin              = 2
+  BC_kmax              = 2
+  Nproc_dir            = 0, 0, 0        ! MPI decomposition (0 = automatic; the i/j/k sub-domains must hold >= 4 cells where split)
+/end
+
+$Initial_Condition
+  IC_type              = 5              ! 1 Brio-Wu, 2 Orszag-Tang, 3 CP Alfven wave, 4 cylindrical tearing equilibrium, 5 tokamak (Solov'ev), 6 uniform
+  IC_dir               = 1              ! IC_type 1: direction of the 1-D profile
+  IC_param             = 0, 0, 0, 0, 0  ! IC_type 1: (1) jump position; 3: (1) tan(angle), (2) amplitude;
+                                        ! 4: (1) q0, (2) r0, (3) lambda, (4) L_z, (5) perturbation width
+  rho_init             = 1.0            ! IC_type 6 (code units): rho, p, v, B
+  p_init               = 1.0            !   (IC_type 4: the uniform pressure)
+  v_init               = 0, 0, 0
+  B_init               = 0, 0, 0
+  Perturb_amp          = 0.0            ! velocity perturbation amplitude (code units, v / v_A0)
+  Perturb_m            = 2              ! poloidal mode number (0 = random noise, seed Perturb_seed)
+  Perturb_n            = 1              ! toroidal / axial mode number
+  Perturb_seed         = 12345
+/end
+
+$Tokamak                                ! IC_type 5: Cerfon-Freidberg Solov'ev equilibrium (the KSTAR grid defaults)
+  R0                   = 1.80           ! major radius [m]
+  a                    = 0.50           ! minor radius [m]
+  kappa                = 1.80           ! elongation
+  delta                = 0.60           ! triangularity
+  B0                   = 3.5            ! vacuum field at R0 [T]
+  A_solovev            = -0.155         ! Solov'ev p' / FF' mix
+  Psi0                 = 8.318766676137974   ! psi scale [Wb/rad] (q95 = 5 for the KSTAR grid)
+  p_floor_ratio        = 0.02           ! uniform pressure offset p_floor / p_axis (keeps the force balance exact)
+  n_axis               = 5.0e19         ! ion density on axis [m-3]
+  n_exponent           = 0.5            ! n = n_axis (p_eq/p_axis)^n_exponent, floored at n_floor_ratio
+  n_floor_ratio        = 0.1
+/end
+
+$Numerical_Scheme
+  Cnvt_scheme          = 4              ! 1 1st-order upwind, 2 2nd-order upwind, 3 QUICK, 4 2nd-order ENO (probCFD), 5 3rd-order ENO
+  Riemann_solver       = 3              ! 1 Rusanov, 2 HLL, 3 HLLD
+  Time_scheme          = 3              ! 1 Euler, 2 SSP RK2 (Heun), 3 SSP RK3
+  Recon_vars           = 1              ! 1 primitive variables, 2 conserved variables
+  CT_scheme            = 1              ! 1 Gardiner-Stone upwind constrained transport, 2 Balsara-Spicer average, 0 none (div B grows)
+  SW_Eq_Subtract       = 0              ! 1: subtract the discrete residual of the initial state (the equilibrium is an exact fixed point)
+  SW_Energy            = 2              ! 1 total energy (conservative), 2 internal-energy equation (low-beta safe), 3 dual
+  Dual_eps             = 0.01           ! SW_Energy 3: thermal fraction below which the internal-energy equation sets p
+  rho_floor            = 1.0e-6         ! code units
+  p_floor              = 1.0e-8
+/end
+
+$Physics
+  eta                  = 0.0            ! resistivity [Ohm m] (code units: 1/S)
+  Spitzer              = 0              ! 1: eta = eta (T/T_ref)^-3/2, capped at eta * eta_max_factor
+  T_ref_eV             = 1000.0
+  eta_max_factor       = 100.0
+  nu                   = 0.0            ! kinematic viscosity [m2/s]
+  chi_par              = 0.0            ! parallel heat diffusivity [m2/s]   (q = -rho [chi_par bb + chi_perp (I - bb)] . grad T)
+  chi_perp             = 0.0            ! perpendicular heat diffusivity [m2/s]
+  chi_ratio_max        = 1.0e6          ! cap of chi_par / chi_perp
+  D_perp               = 0.0            ! perpendicular particle diffusivity [m2/s]
+  P_heat               = 0.0            ! heating power density on axis [W/m3] (Gaussian of width heat_width * a about the axis)
+  heat_width           = 0.5
+  heat_start           = 0.0            ! [s]
+  SW_radiation         = 0              ! 1: bremsstrahlung  5.35e-37 Z_eff n_e n_i sqrt(T_keV) [W/m3]
+  Z_eff                = 1.0
+  SW_Hall              = 0              ! reserved
+  Gravity              = 0, 0, 0        ! body force [m/s2] (tests)
+/end
+
+$Turbulence
+  SW_Turb_MHD          = 0              ! 0 off (ENO dissipation only / implicit LES), 1 MHD Smagorinsky, 2 dynamic (reserved), 3 anomalous transport
+  Cs                   = 0.1            ! Smagorinsky constant: nu_sgs = (Cs Delta)^2 |S|
+  C_eta                = 0.1            ! sub-grid resistivity: eta_sgs = (C_eta Delta)^2 |J|
+  Pr_sgs               = 0.7            ! chi_sgs = nu_sgs / Pr_sgs
+  Anom_model           = 1              ! 1 constants, 2 Bohm: chi = Bohm_coef T/(16 e B)
+  chi_anom             = 0.0            ! [m2/s] added to chi_perp
+  D_anom               = 0.0            ! [m2/s] added to D_perp
+  nu_anom              = 0.0            ! [m2/s] added to nu
+  Bohm_coef            = 1.0
+  anom_max             = 1.0e3          ! cap of the Bohm diffusivity [m2/s]
+/end
+
+$Export_Interval
+  Output_Intvl         = 1000           ! volume files every N steps (0: initial and final only)
+  Log_Intvl            = 100
+  Monitor_Intvl        = 10             ! Output_data/<case>_monitor.dat
+  Restart_Intvl        = 0              ! <case>_NNNNNNNN.rsto every N steps (0: never)
+  Output_slice         = 1              ! 1: also the k = mid plane as ASCII (Output_data/<case>_slice_NNNNNNNN.dat)
+/end
+
+$Stop
+  Stop_CFL_Max         = 1.0e4
+  Stop_Vmax            = 1.0e3          ! max |v| / v_A0
+/end

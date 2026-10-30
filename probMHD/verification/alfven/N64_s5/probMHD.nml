@@ -1,0 +1,33 @@
+$Case_title
+  Case_name            = "Alfven_N64_s5"
+/end
+$Control
+  Units                = 1
+  Del_T                = 0.0
+  End_T                = 1.0
+  CFL                  = 0.4
+  Gamma                = 1.6666666666666667
+/end
+$Grid
+  Grid_format          = 3
+  Ncell                = 64, 32, 1
+  Box_min              = 0.0, 0.0, 0.0
+  Box_max              = 2.236067977499790, 1.118033988749895, 0.034938562148434
+  Periodic             = 1, 1, 1
+/end
+$Initial_Condition
+  IC_type              = 3
+  IC_param             = 2.0, 0.1
+/end
+$Numerical_Scheme
+  Cnvt_scheme          = 5
+  Riemann_solver       = 3
+  Time_scheme          = 3
+  CT_scheme            = 1
+/end
+$Export_Interval
+  Output_Intvl         = 0
+  Log_Intvl            = 1000
+  Monitor_Intvl        = 10
+  Output_slice         = 1
+/end

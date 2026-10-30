@@ -1,0 +1,44 @@
+!=====================================================================
+! probMHD name list - Brio & Wu (1988) MHD shock tube, gamma = 2, 800 cells
+!=====================================================================
+$Case_title
+  Mode                 = 0
+  Case_name            = "BrioWu_upw1"
+/end
+
+$Control
+  Units                = 1              ! code units (Char_* = 1)
+  Del_T                = 0.0            ! automatic
+  End_T                = 0.1
+  CFL                  = 0.4
+  Gamma                = 2.0
+/end
+
+$Grid
+  Grid_format          = 3              ! generated box
+  Ncell                = 800, 1, 1
+  Box_min              = 0.0, 0.0, 0.0
+  Box_max              = 1.0, 0.00125, 0.00125
+  Periodic             = 0, 1, 1
+  BC_imin              = 2              ! zero gradient
+  BC_imax              = 2
+/end
+
+$Initial_Condition
+  IC_type              = 1
+  IC_dir               = 1
+/end
+
+$Numerical_Scheme
+  Cnvt_scheme          = 1
+  Riemann_solver       = 3              ! HLLD
+  Time_scheme          = 3
+  CT_scheme            = 1
+/end
+
+$Export_Interval
+  Output_Intvl         = 0
+  Log_Intvl            = 50
+  Monitor_Intvl        = 10
+  Output_slice         = 1
+/end

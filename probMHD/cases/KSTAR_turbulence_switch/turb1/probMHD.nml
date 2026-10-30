@@ -1,0 +1,84 @@
+!=====================================================================
+! probMHD name list - KSTAR-scale Solov'ev equilibrium, axisymmetric (2-D) hold test
+!   grid: kstar_33x60_axisym.xyz (the delivered 100 x 300 x 100 flux-aligned grid
+!   sub-sampled 3 x 5 in (i, j); one 0.5 deg toroidal wedge, rotational periodicity)
+!=====================================================================
+$Case_title
+  Mode                 = 0
+  Case_name            = "KSTAR_turb1"
+/end
+
+$Control
+  Units                = 0              ! SI inputs
+  Char_L               = 1.0            ! [m]
+  Char_B               = 3.5            ! [T]
+  Char_Rho             = 1.672e-7       ! [kg/m3]  n = 5e19 m-3 deuterium
+  Ion_mass_amu         = 2.014
+  Del_T                = 0.0            ! automatic
+  End_T                = 2.6e-6         ! 20 Alfven times
+  CFL                  = 0.4
+  Gamma                = 1.6666666666666667
+/end
+
+$Grid
+  Grid_file            = "../../grids/kstar_33x60_axisym.xyz"
+  Grid_format          = 2              ! Fortran unformatted PLOT3D (KSTAR file format)
+  Periodic             = 0, 1, 1
+  Periodic_dup         = 0, 0, 1
+  Periodic_rot         = 0, 0, 0.5      ! axisymmetric: a thin 0.5 deg toroidal wedge (any angle; thin keeps the chord error small)
+  BC_imin              = 4              ! axis hole (conducting core)
+  BC_imax              = 1              ! conducting wall on the last flux surface
+/end
+
+$Initial_Condition
+  IC_type              = 5              ! tokamak: Cerfon-Freidberg Solov'ev equilibrium
+  Perturb_amp          = 1.0e-3
+  Perturb_m            = 3
+  Perturb_n            = 0
+/end
+
+$Tokamak
+  R0                   = 1.80
+  a                    = 0.50
+  kappa                = 1.80
+  delta                = 0.60
+  B0                   = 3.5
+  A_solovev            = -0.155
+  Psi0                 = 8.318766676137974
+  p_floor_ratio        = 0.02
+  n_axis               = 5.0e19
+  n_exponent           = 0.5
+  n_floor_ratio        = 0.1
+/end
+
+$Numerical_Scheme
+  Cnvt_scheme          = 4
+  Riemann_solver       = 3
+  Time_scheme          = 3
+  CT_scheme            = 1
+  SW_Eq_Subtract       = 1
+  SW_Energy            = 2              ! internal-energy (pressure) equation: the tokamak is low-beta (p << B^2/2)
+/end
+
+$Physics
+  eta                  = 9.55e-5       ! S = 1e5
+  nu                   = 0.0
+/end
+
+$Turbulence
+  SW_Turb_MHD          = 1
+  Cs                   = 0.1
+  C_eta                = 0.1
+  Pr_sgs               = 0.7
+  Anom_model           = 1
+  chi_anom             = 1.0            ! [m2/s]
+  D_anom               = 0.3
+  nu_anom              = 0.3
+/end
+
+$Export_Interval
+  Output_Intvl         = 0
+  Log_Intvl            = 200
+  Monitor_Intvl        = 20
+  Output_slice         = 1
+/end

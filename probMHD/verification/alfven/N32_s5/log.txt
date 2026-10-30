@@ -1,0 +1,56 @@
+ ===============================================================================
+ ||                                                                           ||
+ ||     pppp   r  r   ooo     b       M   M  H   H  DDDD                      ||
+ ||     p   p  r r   o   o    b       MM MM  H   H  D   D     probMHD         ||
+ ||     p  p   rr   o     o   b       M M M  HHHHH  D    D    full MHD        ||
+ ||     ppp    r    o     o   bbbb    M   M  H   H  D    D    curvilinear     ||
+ ||     p      r    o     o   b   b   M   M  H   H  D   D     ENO / HLLD / CT ||
+ ||     p      r      ooo     bbbb    M   M  H   H  DDDD      MPI             ||
+ ||                                                                           ||
+ ===============================================================================
+ 
+ probMHD - tokamak full-MHD solver (probCFD_부산 family)
+ 
+  grid metrics     : min cell volume*   3.4120E-04  total volume*   1.7469E-01
+ ---------------- input summary (probMHD.nml) ----------------
+  Case_name        : Alfven_N32_s5
+  Mode             : 0 (standard)
+  Units            : 1 (code units; Char_* = 1)
+  Char_L   [m]     :   1.0000E+00
+  Char_B   [T]     :   1.0000E+00
+  Char_Rho [kg/m3] :   1.0000E+00
+  v_A0     [m/s]   :   1.0000E+00
+  t_A0     [s]     :   1.0000E+00
+  p0       [Pa]    :   1.0000E+00
+  End_T    [s]     :   1.0000E+00
+  Del_T            : automatic, CFL  0.400, VN  0.400
+  gamma            :   1.6667
+  cells            :     32    16     1  total 512
+  MPI decomposition:      1     1     1
+  periodic (i,j,k) :  1 1 1
+  BC (imin,imax,jmin,jmax,kmin,kmax):   2  2  2  2  2  2
+  Cnvt_scheme      : 5 (3rd-order ENO)
+  Riemann_solver   : 3 (HLLD)
+  Time_scheme      : 3 (SSP RK3)
+  CT_scheme        : 1 (constrained transport, face fluxes)
+  SW_Eq_Subtract   : 0
+  resistivity      : 0 (ideal MHD)
+  viscosity nu*    :   0.0000E+00
+  chi_par*, chi_perp*:   0.0000E+00  0.0000E+00
+  D_perp*          :   0.0000E+00
+  heating P*       :   0.0000E+00  (width  5.000E-01 a)
+  SW_radiation     : 0
+  SW_Turb_MHD      : 0 (none: ENO dissipation only / implicit LES)
+  IC_type          : 3
+  Output_Intvl     : 0  Log_Intvl 1000  Restart_Intvl 0
+ -------------------------------------------------------------
+ ---------------- initial state ----------------
+  E_kin, E_mag, E_th, E_tot* :   8.734641E-04  8.820153E-02  2.620392E-02  1.152789E-01
+  max |v|*  :   1.0000E-01   max |div B| (normalised):   8.1287E-15
+  first dt   :   1.2529E-02 s  (  1.2529E-02 t_A)
+ -----------------------------------------------
+    step       t [s]        dt [s]     CFL     E_kin*        E_mag*        E_th*       dE_tot/E0    max|v|*    max|divB|   wall [s]
+      80   1.0000E+00   9.1705E-03  0.4000  8.259132E-04  8.815490E-02  2.629810E-02    1.685E-15   9.842E-02   8.662E-15       1.6
+ -----------------------------------------------
+  normal end after 80 steps, t =   1.0000E+00 s, wall time        1.6 s
+  dE_tot/E0 =   1.6854E-15   max |div B| =   8.6616E-15

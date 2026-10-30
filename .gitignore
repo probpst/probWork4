@@ -1,0 +1,13 @@
+# probMHD build and run artifacts
+*.o
+*.mod
+probMHD/probMHD
+**/probMHD
+!probMHD/
+**/Volume_solutions_grids/
+**/Output_data/*_slice_*.dat
+*.rsto
+**/debug_eq/
+**/debug_bw/
+.probmhd_last_rsto
+__pycache__/
