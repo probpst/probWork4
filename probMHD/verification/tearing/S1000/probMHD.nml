@@ -4,12 +4,12 @@ $Case_title
 $Control
   Units                = 1
   Del_T                = 0.0
-  End_T                = 400.0
-  CFL                  = 0.4
+  End_T                = 300.0
+  CFL                  = 0.5
   Gamma                = 1.6666666666666667
 /end
 $Grid
-  Grid_file            = "../cyl_32x48x8.xyz"
+  Grid_file            = "../cyl_28x32x8.xyz"
   Grid_format          = 2
   Periodic             = 0, 1, 1
   Periodic_dup         = 0, 0, 1
@@ -27,7 +27,7 @@ $Initial_Condition
 $Numerical_Scheme
   Cnvt_scheme          = 4
   Riemann_solver       = 3
-  Time_scheme          = 3
+  Time_scheme          = 2
   CT_scheme            = 1
   SW_Eq_Subtract       = 1
 /end
