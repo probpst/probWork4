@@ -1,0 +1,43 @@
+$Case_title
+  Case_name            = "var_ct2"
+/end
+$Control
+  Units                = 1
+  Del_T                = 0.0
+  End_T                = 30.0
+  CFL                  = 0.5
+  Gamma                = 1.6666666666666667
+/end
+$Grid
+  Grid_file            = "../cyl_28x32x8.xyz"
+  Grid_format          = 2
+  Periodic             = 0, 1, 1
+  Periodic_dup         = 0, 0, 1
+  BC_imin              = 1
+  BC_imax              = 1
+/end
+$Initial_Condition
+  IC_type              = 4
+  IC_param             = 1.2, 0.6, 2.0, 18.849555921538759, 0.1
+  p_init               = 0.1
+  Perturb_amp          = 1.0e-4
+  Perturb_m            = 2
+  Perturb_n            = 1
+/end
+$Numerical_Scheme
+  Cnvt_scheme          = 4
+  Riemann_solver       = 3
+  Time_scheme          = 2
+  CT_scheme            = 2
+  SW_Eq_Subtract       = 1
+/end
+$Physics
+  eta                  = 0.0
+  nu                   = 0.0
+/end
+$Export_Interval
+  Output_Intvl         = 0
+  Log_Intvl            = 1000
+  Monitor_Intvl        = 20
+  Output_slice         = 1
+/end

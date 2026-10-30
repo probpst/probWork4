@@ -1,0 +1,63 @@
+ ===============================================================================
+ ||                                                                           ||
+ ||     pppp   r  r   ooo     b       M   M  H   H  DDDD                      ||
+ ||     p   p  r r   o   o    b       MM MM  H   H  D   D     probMHD         ||
+ ||     p  p   rr   o     o   b       M M M  HHHHH  D    D    full MHD        ||
+ ||     ppp    r    o     o   bbbb    M   M  H   H  D    D    curvilinear     ||
+ ||     p      r    o     o   b   b   M   M  H   H  D   D     ENO / HLLD / CT ||
+ ||     p      r      ooo     bbbb    M   M  H   H  DDDD      MPI             ||
+ ||                                                                           ||
+ ===============================================================================
+ 
+ probMHD - tokamak full-MHD solver (probCFD_부산 family)
+ 
+  grid metrics     : min cell volume*   2.3049E-03  total volume*   5.7514E+01
+ ---------------- input summary (probMHD.nml) ----------------
+  Case_name        : var_hll
+  Mode             : 0 (standard)
+  Units            : 1 (code units; Char_* = 1)
+  Char_L   [m]     :   1.0000E+00
+  Char_B   [T]     :   1.0000E+00
+  Char_Rho [kg/m3] :   1.0000E+00
+  v_A0     [m/s]   :   1.0000E+00
+  t_A0     [s]     :   1.0000E+00
+  p0       [Pa]    :   1.0000E+00
+  End_T    [s]     :   3.0000E+01
+  Del_T            : automatic, CFL  0.500, VN  0.400
+  gamma            :   1.6667
+  cells            :     28    32     8  total 7168
+  MPI decomposition:      1     1     1
+  periodic (i,j,k) :  0 1 1
+  BC (imin,imax,jmin,jmax,kmin,kmax):   1  1  2  2  2  2
+  Cnvt_scheme      : 4 (2nd-order ENO, minmod - probCFD)
+  Riemann_solver   : 2 (HLL)
+  Time_scheme      : 2 (SSP RK2)
+  CT_scheme        : 1 (constrained transport, face fluxes)
+  SW_Eq_Subtract   : 1
+  SW_Energy        : 1 (total energy, conservative)
+  resistivity      : 0 (ideal MHD)
+  viscosity nu*    :   0.0000E+00
+  chi_par*, chi_perp*:   0.0000E+00  0.0000E+00
+  D_perp*          :   0.0000E+00
+  heating P*       :   0.0000E+00  (width  5.000E-01 a)
+  SW_radiation     : 0
+  SW_Turb_MHD      : 0 (none: ENO dissipation only / implicit LES)
+  IC_type          : 4
+  Output_Intvl     : 0  Log_Intvl 1000  Restart_Intvl 0
+ -------------------------------------------------------------
+  tearing equilibrium: q0  1.200  r0  0.600  lambda  2.00  L_z  18.8496
+                       rational surface r_s =   0.6930  (m/n = 2/1)
+                       B_z(axis) 1.0000  B_z(1)   0.9783  q(1)   3.5435
+  boundary B_n/|B| (dir 1, side 1):  3.760E-17
+  boundary B_n/|B| (dir 1, side 2):  6.113E-17
+  equilibrium subtraction: max |rhs_eq| (momentum)  8.959E-03  max |emf_eq|  5.607E-03
+ ---------------- initial state ----------------
+  E_kin, E_mag, E_th, E_tot* :   2.579958E-08  2.807950E+01  8.627100E+00  3.670660E+01
+  max |v|*  :   9.5888E-05   max |div B| (normalised):   1.0744E-15
+  first dt   :   7.1810E-03 s  (  7.1810E-03 t_A)
+ -----------------------------------------------
+    step       t [s]        dt [s]     CFL     E_kin*        E_mag*        E_th*       dE_tot/E0    max|v|*    max|divB|   min rho*    wall [s]
+    1000   7.1809E+00   7.1809E-03  0.5000  1.524725E-10  2.807950E+01  8.627101E+00    3.484E-15   6.168E-06   3.498E-15   1.000E+00     222.8
+    2000   1.4362E+01   7.1809E-03  0.5000  7.726693E-11  2.807950E+01  8.627102E+00    5.807E-15   3.932E-06   5.032E-15   1.000E+00     461.4
+    3000   2.1543E+01   7.1808E-03  0.5000  8.826178E-10  2.807950E+01  8.627101E+00    2.129E-15   2.513E-05   6.924E-15   1.000E+00     820.6
+    4000   2.8723E+01   7.1807E-03  0.5000  2.020993E-09  2.807950E+01  8.627101E+00    3.484E-15   3.494E-05   8.590E-15   1.000E+00    1309.7

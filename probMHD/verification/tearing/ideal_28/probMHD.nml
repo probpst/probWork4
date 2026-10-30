@@ -4,7 +4,7 @@ $Case_title
 $Control
   Units                = 1
   Del_T                = 0.0
-  End_T                = 40.0
+  End_T                = 30.0
   CFL                  = 0.5
   Gamma                = 1.6666666666666667
 /end

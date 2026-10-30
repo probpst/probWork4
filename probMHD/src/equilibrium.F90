@@ -215,6 +215,15 @@ contains
        wc(6) = (bRR*cos(phi) - bPh*sin(phi))/Bch
        wc(7) = (bRR*sin(phi) + bPh*cos(phi))/Bch
        wc(8) = bZZ/Bch
+    case (7)   ! sheared slab (force balanced, p uniform): B_y = B0 tanh((x - x0)/w), B_z = sqrt(B0^2 + Bg^2 - B_y^2)
+       !           ic_param: (1) B0 [1], (2) w [0.1], (3) x0 [0.5], (4) guide field Bg [0.5]
+       wc(1) = rho_init;  wc(5) = p_init
+       x1 = merge(ic_param(1), 1.0_dp, ic_param(1) /= 0.0_dp)
+       s  = merge(ic_param(2), 0.1_dp, ic_param(2) /= 0.0_dp)
+       ca = merge(ic_param(3), 0.5_dp, ic_param(3) /= 0.0_dp)
+       sa = merge(ic_param(4), 0.5_dp, ic_param(4) /= 0.0_dp)
+       wc(7) = x1*tanh((x(1) - ca)/s)
+       wc(8) = sqrt(max(x1**2 + sa**2 - wc(7)**2, 0.0_dp))
     case default
        wc(1) = rho_init;  wc(5) = p_init;  wc(2:4) = v_init;  wc(6:8) = B_init
     end select

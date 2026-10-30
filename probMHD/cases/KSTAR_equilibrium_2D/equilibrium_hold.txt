@@ -1,0 +1,3 @@
+33 x 60, free                    t_end =   3.05 t_A  max|v|/v_A: end 2.917e-01  peak 3.222e-01  E_th/E_th0 end 2.1830  E_mag/E_mag0 end 1.010503  max divB 7.86e-06
+33 x 60, SW_Eq_Subtract = 1      t_end =   8.26 t_A  max|v|/v_A: end 1.855e-09  peak 1.855e-09  E_th/E_th0 end 1.0000  E_mag/E_mag0 end 1.000000  max divB 1.38e-11
+99 x 150, free                   t_end =   0.77 t_A  max|v|/v_A: end 4.046e-01  peak 4.046e-01  E_th/E_th0 end 1.0027  E_mag/E_mag0 end 1.000175  max divB 7.37e-12
