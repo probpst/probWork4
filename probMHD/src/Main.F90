@@ -36,6 +36,11 @@ program probMHD_main
   call build_metrics
   call print_input_summary
   call initialize_fields
+  if (SW_Eq_Subtract == 1) then
+     ! the discrete residual of the UNPERTURBED equilibrium is stored by the first RHS evaluation
+     call refresh_state(ueq, bfeq, einteq)
+     call compute_rhs(ueq, bfeq, einteq, 0.0_dp)
+  end if
   call refresh_state(u, bf, eint)
   step0 = 0
   if (run_mode == 1) then

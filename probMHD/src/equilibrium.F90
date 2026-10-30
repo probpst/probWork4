@@ -110,8 +110,21 @@ contains
     if (ic_type == 5) call add_toroidal_faces
     call exchange(bf, 3)
     call cell_B_from_faces(bf, w)
-    call add_perturbation
     call heating_profile
+    ! the unperturbed state: fixed boundary values and the equilibrium residual (SW_Eq_Subtract)
+    do k = 1-ngk, nz+ngk
+       do j = 1-ngj, ny+ngj
+          do i = 1-ngi, nx+ngi
+             call prim2cons(w(:, i, j, k), ueq(:, i, j, k))
+          end do
+       end do
+    end do
+    call exchange(ueq, NVAR)
+    einteq(1, :, :, :) = w(5, :, :, :)/(gam - 1.0_dp)
+    call exchange(einteq, 1)
+    bfeq = bf
+    ! the initial state: equilibrium + perturbation
+    call add_perturbation
     do k = 1-ngk, nz+ngk
        do j = 1-ngj, ny+ngj
           do i = 1-ngi, nx+ngi
@@ -122,7 +135,6 @@ contains
     call exchange(u, NVAR)
     eint(1, :, :, :) = w(5, :, :, :)/(gam - 1.0_dp)
     call exchange(eint, 1)
-    ueq = u;  bfeq = bf;  einteq = eint
     call report_boundary_flux
   end subroutine initialize_fields
 

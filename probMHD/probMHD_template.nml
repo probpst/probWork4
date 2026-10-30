@@ -34,7 +34,7 @@ $Grid
   Periodic_dup         = 0, 0, 0        ! 1: the periodic closing node is repeated in the file (probCFD grids); 0: no duplicate (KSTAR file)
   Periodic_rot         = 0, 0, 0        ! rotational periodicity about z [deg] for a toroidal wedge (with Periodic_dup = 1); 0 = translation
   BC_imin              = 4              ! boundary types: 1 conducting wall (slip, B_n held), 2 zero gradient, 3 fixed (initial state held),
-  BC_imax              = 1              !   4 axis hole / conducting core (as 1)
+  BC_imax              = 1              !   4 axis hole: the core patch holds the initial state (as 3)
   BC_jmin              = 2
   BC_jmax              = 2
   BC_kmin              = 2

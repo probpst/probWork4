@@ -10,8 +10,10 @@
 !     2 zero gradient  all variables and face fluxes copied outward
 !     3 fixed          ghost cells hold the initial state (ueq, bfeq);
 !                      the boundary-edge EMF is zero
-!     4 axis hole      conducting core: as 1 (the inner boundary of a
-!                      flux-aligned grid is a hole, not the axis)
+!     4 axis hole      the core patch inside the inner flux surface of a
+!                      flux-aligned grid: the ghost cells hold the initial
+!                      (equilibrium) state as a reservoir (as 3; a mirror
+!                      wall there drained the first ring of cells)
 !   Periodic directions are exchanged by mpi_vars (also across ranks).
 !=======================================================================
 module boundary
@@ -126,9 +128,9 @@ contains
     real(dp), intent(inout) :: ug(NVAR)
     real(dp) :: wc(NVAR), vn, bn
     select case (typ)
-    case (3)
+    case (3, 4)
        ug = ue
-    case (1, 4)
+    case (1)
        call cons2prim(ub, wc)
        vn = dot_product(wc(2:4), nrm);  wc(2:4) = wc(2:4) - 2.0_dp*vn*nrm
        bn = dot_product(wc(6:8), nrm);  wc(6:8) = wc(6:8) - 2.0_dp*bn*nrm
@@ -151,9 +153,9 @@ contains
           typ = bc_type(side, c)
           do g = 1, ng3(c)
              select case (typ)
-             case (3)
+             case (3, 4)
                 call copy_face_layer(bb, bfeq, c, side, g)
-             case (1, 4)
+             case (1)
                 call mirror_face_layer(bb, c, side, g)
              case default
                 call extrap_face_layer(bb, c, side, g)

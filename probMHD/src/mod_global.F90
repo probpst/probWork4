@@ -58,7 +58,7 @@ module global_vars
   integer  :: periodic(3) = 0             ! 1: periodic in i/j/k
   integer  :: periodic_dup(3) = 0         ! 1: the periodic closing node is repeated in the file
   real(dp) :: periodic_rot(3) = 0.0_dp    ! rotational periodicity about the z axis [deg] (toroidal wedge); 0 = translation
-  integer  :: bc_type(2,3) = 2            ! (min/max, dir): 0 periodic, 1 conducting wall, 2 zero gradient, 3 fixed (initial values held), 4 axis hole (conducting core)
+  integer  :: bc_type(2,3) = 2            ! (min/max, dir): 0 periodic, 1 conducting wall, 2 zero gradient, 3 fixed (initial values held), 4 axis hole (core reservoir: initial state held, as 3)
   integer  :: nproc_dir(3) = 0            ! MPI decomposition (0 = automatic)
 
   !------------------ $Initial_Condition -----------------------------
